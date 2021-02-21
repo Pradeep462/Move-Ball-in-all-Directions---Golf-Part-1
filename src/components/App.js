@@ -1,11 +1,15 @@
-import React, {  useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import '../styles/App.css';
 
-const App= ()=> {
+function App(){
     
     const [renderBall, setRenderBall] = useState(false);
-    const [posi, setPosi] = useState({ left: 5,top:5 });
+    const [posi, setPosi] = useState(0);
     const [ballPosition, setBallPosition] = useState({ left: 0,top:0 });
+
+    const buttonClickHandler=()=> {
+        setRenderBall(true);
+      }
 
     const updateXY = (x , y)=>{
         setBallPosition({
@@ -39,20 +43,17 @@ const App= ()=> {
      });
 
     
-    const buttonClickHandler=()=> {
-     setRenderBall(true);
-   }
+    
     const renderBallOrButton=()=> {
 		if (renderBall) {
-		    return (
-            <div className="ball" 
+		    return <div className="ball" 
             style={{
                 left: ballPosition.left+"px",
                 top:ballPosition.top+"px",
                 position:"absolute",
             }}
             ></div>
-            );
+           
 		} else {
 		    return <button onClick={buttonClickHandler} >Click For One Ball</button>
 		}
@@ -65,7 +66,7 @@ const App= ()=> {
             <div className="playground">
                 {renderBallOrButton()}
             </div>
-        );
+        )
     
 }
 
