@@ -33,10 +33,10 @@ const App= ()=> {
     }
 
      useEffect(()=>{
-        const keyListener = document.addEventListener("keydown",handleClick);
+            document.addEventListener("keydown",handleClick);
             return ()=> document.removeEventListener("keydown",handleClick);
          
-     },[ballPosition]);
+     });
 
     
     const buttonClickHandler=()=> {
