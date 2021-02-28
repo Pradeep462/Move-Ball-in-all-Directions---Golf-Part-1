@@ -4,7 +4,7 @@ import '../styles/App.css';
 function App(){
     
     const [renderBall, setRenderBall] = useState(false);
-    const [posi, setPosi] = useState(0);
+    // const [posi, setPosi] = useState(0);
     const [ballPosition, setBallPosition] = useState({ left: 0,top:0 });
 
     const buttonClickHandler=()=> {
