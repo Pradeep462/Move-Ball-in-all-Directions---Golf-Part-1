@@ -1,74 +1,79 @@
-import React, { Component, useEffect, useState } from "react";
-import '../styles/App.css';
+import React, { useEffect, useState } from "react";
+import "../styles/App.css";
 
-function App(){
-    
-    const [renderBall, setRenderBall] = useState(false);
-    // const [posi, setPosi] = useState(0);
-    const [ballPosition, setBallPosition] = useState({ left: 0,top:0 });
+const App = () => {
+  const [renderBall, setRenderBall] = useState(false);
+  const [posi, setPosi] = useState(0);
+  const [ballPosition, setBallPosition] = useState({
+    left: 0,
+    top: 0,
+  });
 
-    const buttonClickHandler=()=> {
-        setRenderBall(true);
-      }
+  const buttonClickHandler = () => {
+    setRenderBall(true);
+  };
 
-    const updateXY = (x , y)=>{
-        setBallPosition({
-            left :x,
-            top:y,
+  const renderBallOrButton = () => {
+    if (renderBall) {
+      return (
+        <div
+          className="ball"
+          style={{
+            left: ballPosition.left + "px",
+            top: ballPosition.top + "px",
+            position: "absolute",
+          }}
+        ></div>
+      );
+    } else {
+      return <button onClick={buttonClickHandler}>Click For One Ball</button>;
+    }
+  };
+
+  function handleKeyDown(event){
+    console.log(event.keyCode,renderBall,ballPosition);
+    // console.log("i")
+     switch (event.keyCode) {
+       case 39:
+         setBallPosition({
+           left: ballPosition.left + 5,
+           top: ballPosition.top,
          });
-    };
-    const handleClick =()=>{ switch(event.keyCode){
-        case 39:
-            updateXY(ballPosition.left + 5, ballPosition.top);
-            break;
-            case 40:
-            updateXY(ballPosition.left,ballPosition.top + 5);
-            break;
-            case 37:
-            updateXY(ballPosition.left - 5,ballPosition.top);
-            break;
-            case 38:
-            updateXY(ballPosition.left,ballPosition.top - 5);
-            break;
-            default:
-               break;
-          
-     } 
-    }
+         break;
+       case 40:
+         setBallPosition({
+           left: ballPosition.left,
+           top: ballPosition.top + 5,
+         });
+         break;
+       case 37:
+         setBallPosition({
+           left: ballPosition.left - 5,
+           top: ballPosition.top,
+         });
+         break;
+       case 38:
+         setBallPosition({
+           left: ballPosition.left,
+           top: ballPosition.top - 5,
+         });
+         break;
+       default:
+         break;
+     }
+     
+   }
+  
 
-     useEffect(()=>{
-            document.addEventListener("keydown",handleClick);
-            return ()=> document.removeEventListener("keydown",handleClick);
-         
-     });
+  // bind ArrowRight keydown event
+  useEffect(() => {
+    console.log("hi")
+     document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown",handleKeyDown);
+  });
+ 
 
-    
-    
-    const renderBallOrButton=()=> {
-		if (renderBall) {
-		    return <div className="ball" 
-            style={{
-                left: ballPosition.left+"px",
-                top:ballPosition.top+"px",
-                position:"absolute",
-            }}
-            ></div>
-           
-		} else {
-		    return <button onClick={buttonClickHandler} >Click For One Ball</button>
-		}
-    }
-
-    // bind ArrowRight keydown event
-    
-   
-        return (
-            <div className="playground">
-                {renderBallOrButton()}
-            </div>
-        )
-    
-}
-
+  return <div className="playground">{renderBallOrButton()}</div>;
+};
 
 export default App;
